@@ -1,0 +1,118 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-07-18"
+---
+```{r}
+suppressPackageStartupMessages(library(dada2))
+suppressPackageStartupMessages(library(phyloseq))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(phangorn))
+suppressPackageStartupMessages(library(DECIPHER))
+suppressPackageStartupMessages(library(vegan))
+suppressPackageStartupMessages(library(DESeq2))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(Biostrings))
+suppressPackageStartupMessages(library(ANCOMBC))
+suppressPackageStartupMessages(library(mvabund))
+#library(microbial)
+theme_set(theme_bw())
+path <- "~/workspace/MPI/SG_MemoryRapamycin/"
+
+new_day <- gsub("-", "", as.character(Sys.Date()))
+
+setwd("~/workspace/MPI/SG_MemoryRapamycin/scripts/")
+project_path <- "~/workspace/MPI/SG_MemoryRapamycin/"
+new_day <- gsub("-", "", as.character(Sys.Date()))
+metadata <- read.table("~/workspace/MPI/SG_MemoryRapamycin/metadata/metadata_rapaMem.csv", sep = ";", header = T, row.names = 1, stringsAsFactors = F, comment.char = "")
+ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/analysis/phyloseq_obj_20230719.rds")
+
+## Subset females
+sample_data(ps)$Sex <- as.factor(sample_data(ps)$Sex)
+#ps <- subset_samples(ps, Sex %in% c("m"))
+```
+
+```{r DESeq2}
+## Differential expression
+# Store data in "../analysis/deseq_timepoints/"
+# Format sampledata
+sample_data(ps)$Treatment <- as.factor(sample_data(ps)$Treatment)
+sample_data(ps)$Age <- as.factor(sample_data(ps)$Age)
+# Subset AL/DR
+#aldr_comp <- subset_samples(ps, Treatment %in% c("Control", "Rapa memory Late (RM L)"))
+#aldr_comp <- subset_samples(ps, Treatment %in% c("Control", "Rapamycin conti (RC)"))
+aldr_comp <- subset_samples(ps, Treatment %in% c("Rapamycin conti (RC)", "Rapa memory Early (RM E)"))
+# Timepoints to the maximum before reaching only 1 mouse alive of the shortest lived group
+timepoint <- c("Old")
+for (i in 1:length(timepoint)){
+  # Subset for months
+  comp <- subset_samples(aldr_comp, Age %in% c("Old"))
+  
+  ds <- phyloseq_to_deseq2(comp, ~Treatment)
+  
+  # Since these tables have zeroes
+  # calculate geometric means prior to estimate size factors
+  gm_mean = function(x, na.rm=TRUE){
+    exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
+  }
+  geoMeans = apply(counts(ds), 1, gm_mean)
+  
+  ds = estimateSizeFactors(ds, geoMeans = geoMeans)
+  ds = DESeq(ds, fitType="local", test="Wald")
+  
+  res <- results(ds)
+  alpha <- 0.05
+  sigtab <- res[which(res$padj < alpha), ]
+  sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
+  
+  write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints/RCRME_", timepoint[i], "M_", new_day, ".csv"), sep=";", quote=F, col.names=NA)
+}
+```
+
+```{r}
+## Differential expression
+# Store data in "../analysis/deseq_timepoints/"
+# Format sampledata
+# Subset AL/DR
+#aldr_comp <- subset_samples(ps, Treatment %in% c("Control", "Rapa memory Late (RM L)"))
+#aldr_comp <- subset_samples(ps, Treatment %in% c("Control", "Rapamycin conti (RC)"))
+aldr_comp <- subset_samples(ps, Treatment %in% c("Control"))
+# Timepoints to the maximum before reaching only 1 mouse alive of the shortest lived group
+timepoint <- c("Old")
+for (i in 1:length(timepoint)){
+  # Subset for months
+  comp <- subset_samples(aldr_comp, Age %in% c("Young"))
+  
+  ds <- phyloseq_to_deseq2(comp, ~Sex)
+  
+  # Since these tables have zeroes
+  # calculate geometric means prior to estimate size factors
+  gm_mean = function(x, na.rm=TRUE){
+    exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
+  }
+  geoMeans = apply(counts(ds), 1, gm_mean)
+  
+  ds = estimateSizeFactors(ds, geoMeans = geoMeans)
+  ds = DESeq(ds, fitType="local", test="Wald")
+  
+  res <- results(ds)
+  alpha <- 0.05
+  sigtab <- res[which(res$padj < alpha), ]
+  sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
+  
+  write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints/YoungSexControl_", timepoint[i], "M_", new_day, ".csv"), sep=";", quote=F, col.names=NA)
+}
+```
+
+
+```{r}
+# Check that all our timepoints have OTUs fitting to negative binomial and can therefore be analyzed by deseq2
+for (i in 1:length(timepoint)){
+  comp <- subset_samples(aldr_comp, Age %in% timepoint[i])
+  nb <- manyglm(otu_table(comp) ~ sample_data(comp)$Treatment, family = "negative_binomial")
+  pdf(paste0("~/workspace/MPI/SG_MemoryRapamycin/analysis/deseq_timepoints/neg_binom_", timepoint[i], "_M_", new_day, ".pdf"))
+  plot(nb)
+  dev.off()
+}
+```
