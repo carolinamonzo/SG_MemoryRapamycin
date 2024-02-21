@@ -1,0 +1,243 @@
+---
+title: "rapamycin_memory"
+output: html_document
+date: "2024-02-19"
+---
+
+```{r, libraries, verbose = FALSE}
+# load libraries
+library(dada2); packageVersion("dada2")
+library(phyloseq); packageVersion("phyloseq")
+library(Biostrings); packageVersion("Biostrings")
+library(ggplot2); packageVersion("ggplot2")
+library(phangorn); packageVersion("phangorn")
+library(DECIPHER); packageVersion("DECIPHER")
+library(vegan); packageVersion("vegan")
+library(DESeq2); packageVersion("DESeq2")
+library(tidyr); packageVersion("tidyr")
+library(pairwiseAdonis)
+library(biomformat)
+#library(microbiomeSeq)
+theme_set(theme_bw())
+```
+
+```{r, files}
+# Load files
+path <- "~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/data/"
+path_fastq <- "~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/data/fastq_trimmed/"
+pathQC <- "~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/dada_quality/"
+# forward and reverse fastq filenames have format: sample-name_xx_xx_R1_001.fastq
+fnFs <- sort(list.files(path_fastq, pattern="_1.fastq", full.names = TRUE))
+fnRs <- sort(list.files(path_fastq, pattern="_2.fastq", full.names = TRUE))
+# Extract sample names
+sample.names <- sapply(strsplit(basename(fnFs), "_"), function(x) paste(x[1:2], collapse = "_"))
+names(fnFs) <- sample.names
+names(fnRs) <- sample.names
+```
+
+```{r}
+# Place filtered files in filtered/ subdirectory
+filtFs <- file.path(path, "fastq_filtered/", paste0(sample.names, "_F_filt.fastq.gz"))
+filtRs <- file.path(path, "fastq_filtered/", paste0(sample.names, "_R_filt.fastq.gz"))
+names(filtFs) <- sample.names
+names(filtRs) <- sample.names
+```
+
+```{r}
+out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs,
+              maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
+              compress=TRUE, multithread=TRUE) # On Windows set multithread=FALSE
+```
+
+
+```{r, errors, verbose = FALSE}
+# Learn errors
+errF <- learnErrors(filtFs, multithread = TRUE)
+errR <- learnErrors(filtRs, multithread = TRUE)
+svg(paste(pathQC,"QC_errors_filtF.svg"))
+plotErrors(errF, nominalQ = TRUE)
+dev.off()
+svg(paste(pathQC, "QC_errors_filtR.svg"))
+plotErrors(errR, nominalQ = TRUE)
+dev.off()
+
+plotQualityProfile(filtFs[1:2])
+plotQualityProfile(filtRs[1:2])
+```
+
+```{r, dereplicate, verbose = FALSE}
+# Dereplicate FASTQ files to speed up computation
+derepFs = derepFastq(filtFs, verbose = FALSE)
+derepRs = derepFastq(filtRs, verbose = FALSE)
+# Name the derep-class objects by the sample names
+names(derepFs) = sample.names
+names(derepRs) = sample.names
+```
+
+```{r, SVA, verbose = FALSE}
+# Apply core sequence-variant inference algorithm 
+dadaRs = dada(derepRs, err=errR, multithread=TRUE, pool = "pseudo")
+dadaFs = dada(derepFs, err=errF, multithread=TRUE, pool = "pseudo")
+```
+
+
+```{r, chimeras, verbose = FALSE, warning = FALSE}
+# merge paired reads
+mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=FALSE)
+# Make sequence table for analysis
+seqtab <- makeSequenceTable(mergers)
+# Remove chimeras
+seqtab.nochim <- removeBimeraDenovo(seqtab, method = "consensus", multithread = TRUE, verbose = FALSE)
+
+save.image(file=paste0(pathQC, 'myEnvironment-20240219.RData'))
+```
+
+```{r, track, verbose = FALSE, warning = FALSE}
+getN <- function(x) sum(getUniques(x))
+track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(mergers, getN), rowSums(seqtab.nochim))
+# If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
+colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nonchim")
+rownames(track) <- sample.names
+head(track)
+```
+
+```{r, pip1QC, verbose = FALSE}
+## Quality controls
+cat("Dimensions of original sequence table",file=paste(pathQC, "QC_run_pipeline.txt"),sep="\n")
+cat(dim(seqtab),file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+## Inspect distribution of sequence lengths
+cat("\nDistribution of sequence lengths\n",file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+write.table(table(nchar(getSequences(seqtab))),file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE, row.names = FALSE, col.names = FALSE)
+## Dimensions after removing chimeras
+cat("\nDimensions of sequence table after removing chimeras\n",file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+cat(dim(seqtab.nochim),file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+# Percent of chimeras in the original dataset
+cat("\nPercentage of chimeras in the original sequence table\n",file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+cat(sum(seqtab.nochim)/sum(seqtab),file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+# Write it into a csv
+write.table(track, paste(pathQC,"QC_trackReads.csv"), sep = ";", quote = F)
+```
+
+
+
+```{r, assigntax, verbose = FALSE}
+# Assign Taxonomy using Naive Bayes algorithm
+taxa <- assignTaxonomy(seqtab.nochim, "~/workspace/MPI/LG_16S_TransferTest/16S_testRun_250/fastq_files/tiny_test/tax_silva132/silva_nr_v132_train_set.fa")
+# And add species
+taxa.plus <- addSpecies(taxa, "~/workspace/MPI/LG_16S_TransferTest/16S_testRun_250/fastq_files/tiny_test/tax_silva132/silva_species_assignment_v132.fa")
+colnames(taxa.plus) <- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+```
+
+## Getting biom file to work in picrust
+
+```{r CONTROL}
+st.biom <- make_biom(t(seqtab.nochim))
+write_biom(st.biom, paste0(pathQC, "ASV_table.biom"))
+# Also save what we have until now
+asv_seqs <- colnames(seqtab.nochim)
+asv_headers <- vector(dim(seqtab.nochim)[2], mode="character")
+for (i in 1:dim(seqtab.nochim)[2]) {
+  asv_headers[i] <- paste(">ASV", i, sep="_")
+}
+  # making and writing out a fasta of our final ASV seqs:
+asv_fasta <- c(rbind(asv_headers, asv_seqs))
+write(asv_fasta, paste0(pathQC, "ASVs.fa"))
+  # count table:
+asv_tab <- t(seqtab.nochim)
+row.names(asv_tab) <- sub(">", "", asv_headers)
+write.table(asv_tab, paste0(pathQC, "ASVs_counts.tsv"), sep="\t", quote=F, col.names=NA)
+st.biom = make_biom(asv_tab)
+write_biom(st.biom, paste0(pathQC, "ASV_table.biom"))
+  # tax table:
+asv_tax <- taxa
+row.names(asv_tax) <- sub(">", "", asv_headers)
+write.table(asv_tax, paste0(pathQC, "ASVs_taxonomy.tsv"), sep="\t", quote=F, col.names=NA)
+```
+
+```{r, pip2QC, verbose = FALSE}
+## Quality control
+taxa.print <- taxa # Removing sequence rownames for display only
+rownames(taxa.print) <- NULL
+cat("\nFirst rows of assigned taxa\n",file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+cat(head(taxa.print),file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+cat("\nFirst rows of assigned species\n",file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+cat(head(unname(taxa.plus)),file=paste(pathQC, "QC_run_pipeline.txt"),append=TRUE)
+save.image(file=paste0(pathQC, 'myEnvironment-20240219.RData'))
+```
+
+```{r}
+samdf <- read.table(paste0(path, "../metadata_rapaInter.csv"), header=T, row.names=1, check.names=F, sep=",")
+# Join metadata, sequence table ad taxa intoa phyloseq object
+ps <- phyloseq(otu_table(seqtab.nochim, taxa_are_rows=FALSE), 
+               sample_data(samdf), 
+               tax_table(taxa))
+
+# Get table of sequences and their lengths
+dna <- Biostrings::DNAStringSet(taxa_names(ps))
+# For now the names are the sequence again
+names(dna) <- taxa_names(ps)
+# Include reference sequences in phyloseq
+ps <- merge_phyloseq(ps, dna)
+# We dont have names, so we count for each taxa (named ASV[num])
+# the number of times it shows up in each one of our samples
+taxa_names(ps) <- paste0("ASV", seq(ntaxa(ps)))
+```
+
+```{r, alpha, verbose = FALSE, warning = FALSE}
+# Alpha diversity
+
+p = plot_richness(ps, color = "Treatment", measures=c("Shannon", "Simpson"), x = "Age") + theme(legend.title = element_blank())
+
+print(p)
+
+## New stuff
+write.table(estimate_richness(ps), paste0(path, "../analysis/alpha_values.csv"), sep = ";", quote = F)
+```
+```{r}
+ps.prop <- transform_sample_counts(ps, function(otu) otu/sum(otu))
+ord.nmds.bray <- ordinate(ps.prop, method = "NMDS", distance = "bray")
+plot_ordination(ps.prop, ord.nmds.bray, color = "Treatment", shape = as.factor(sample_data(ps.prop)$Age))
+```
+
+```{r}
+# Filter out samples with total number of reads < 1500
+# This also removes samples with less than 10 ASVs identified
+clean_seqtab.nochim <- seqtab.nochim[which(rowSums(seqtab.nochim) > 1000), ]
+# Filter out OTUs found in less than 5 samples
+clean_seqtab.nochim <- clean_seqtab.nochim[, colSums(clean_seqtab.nochim) > 4]
+# Filter out OTUs with total sum below 5 (depth of sequencing)
+clean_seqtab.nochim <- clean_seqtab.nochim[,which(colSums(clean_seqtab.nochim) > 4)]
+
+# Save clean seqtab files for analysis
+saveRDS(clean_seqtab.nochim, paste0(path, "../analysis/CLEAN_merged_seqtabNochim.rds"))
+
+# Asign TAXA again since our dataframe is now definitely clean
+taxa <- assignTaxonomy(clean_seqtab.nochim, "~/workspace/MPI/LG_16S_TransferTest/16S_testRun_250/fastq_files/tiny_test/tax_silva132/silva_nr_v132_train_set.fa", multithread = TRUE)
+taxa.plus <- addSpecies(taxa, "~/workspace/MPI/LG_16S_TransferTest/16S_testRun_250/fastq_files/tiny_test/tax_silva132/silva_species_assignment_v132.fa")
+saveRDS(taxa, paste0(path, "../analysis/CLEAN_taxonomy_merged.rds"))
+saveRDS(taxa.plus, paste0(path, "../analysis/CLEAN_taxa-plus_merged.rds"))
+
+# Getting intermediate files
+st.biom <- make_biom(t(clean_seqtab.nochim))
+write_biom(st.biom, paste0(path, "../analysis/CLEAN_ASV_table_merged.biom"))
+# Also save what we have until now
+asv_seqs <- colnames(clean_seqtab.nochim)
+asv_headers <- vector(dim(clean_seqtab.nochim)[2], mode="character")
+for (i in 1:dim(clean_seqtab.nochim)[2]) {
+  asv_headers[i] <- paste(">ASV", i, sep="_")
+}
+# making and writing out a fasta of our final ASV seqs:
+asv_fasta <- c(rbind(asv_headers, asv_seqs))
+write(asv_fasta, paste0(path, "../analysis/CLEAN_ASVs_merged.fa"))
+# count table:
+asv_tab <- t(clean_seqtab.nochim)
+row.names(asv_tab) <- sub(">", "", asv_headers)
+write.table(asv_tab, paste0(path, "../analysis/CLEAN_ASVs_counts_merged.tsv"), sep="\t", quote=F, col.names=NA)
+st.biom = make_biom(asv_tab)
+write_biom(st.biom, paste0(path, "../analysis/CLEAN_ASV_table_merged2.biom"))
+# tax table:
+asv_tax <- taxa
+row.names(asv_tax) <- sub(">", "", asv_headers)
+write.table(asv_tax, paste0(path, "../analysis/CLEAN_ASVs_taxonomy_merged.tsv"), sep="\t", quote=F, col.names=NA)
+```
+
