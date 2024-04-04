@@ -87,7 +87,7 @@ for (comp_pair in comparisons) {
       sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
       
       # Name of the comparison
-      comp_name <- paste(comp_pair, collapse = "_vs_")
+      comp_name <- paste(comp_pair, collapse = "")
       
       # Write results to file
       write.table(sigtab, 
@@ -164,7 +164,7 @@ for (comp_pair in comparisons) {
       sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
       
       # Name of the comparison
-      comp_name <- paste(comp_pair, collapse = "_vs_")
+      comp_name <- paste(comp_pair, collapse = "")
       
       # Write results to file
       write.table(sigtab, 
@@ -237,7 +237,7 @@ for (comp_pair in comparisons) {
       sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
       
       # Name of the comparison
-      comp_name <- paste(comp_pair, collapse = "_vs_")
+      comp_name <- paste(comp_pair, collapse = "")
       
       # Write results to file
       write.table(sigtab, 
@@ -250,45 +250,64 @@ for (comp_pair in comparisons) {
 }
 ```
 
-
 ```{r}
 ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/phyloseq_obj_20240220.rds")
-## Differential expression
-# Store data in "../analysis/deseq_timepoints/"
-# Format sampledata
-# Subset AL/DR
-aldr_comp <- subset_samples(ps, Treatment %in% c("Rapa Late"))
-#aldr_comp <- subset_samples(ps, Treatment %in% c("Rapa Early"))
-#aldr_comp <- subset_samples(ps, Treatment %in% c("Rapa Adult"))
-#aldr_comp <- subset_samples(ps, Treatment %in% c("Control"))
-# Timepoints to the maximum before reaching only 1 mouse alive of the shortest lived group
-timepoint <- c("Old")
-for (i in 1:length(timepoint)){
-  # Subset for months
-  comp <- subset_samples(aldr_comp, Age %in% timepoint[[i]])
-  
-  ds <- phyloseq_to_deseq2(comp, ~Sex)
-  
-  # Since these tables have zeroes
-  # calculate geometric means prior to estimate size factors
-  gm_mean = function(x, na.rm=TRUE){
-    exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
-  }
-  geoMeans = apply(counts(ds), 1, gm_mean)
-  
-  ds = estimateSizeFactors(ds, geoMeans = geoMeans)
-  ds = DESeq(ds, fitType="local", test="Wald")
-  
-  res <- results(ds)
-  alpha <- 0.05
-  sigtab <- res[which(res$padj < alpha), ]
-  sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
-  
-  write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints/SexRL_", timepoint[i], "_", new_day, ".csv"), sep=";", quote=F, col.names=NA)
-}
 
-ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/phyloseq_obj_20240220.rds")
+# Format sampledata
+sample_data(ps)$Treatment <- as.factor(sample_data(ps)$Treatment)
+sample_data(ps)$Age <- as.factor(sample_data(ps)$Age)
+
+# Define comparisons
+comparisons <- list(
+  c("Control"),
+  c("Rapa Adult"),
+  c("Rapa Early"),
+  c("Rapa Late")
+)
+
+# Timepoints
+timepoints <- c("Young", "Mid", "Old")
+# Loop over comparisons
+for (comp_pair in comparisons) {
+  for (timepoint in timepoints) {
+    tryCatch({
+      
+      # Subset for months and treatments
+      comp <- subset_samples(ps, Age %in% timepoint)
+      comp <- subset_samples(comp, Treatment %in% comp_pair)
+      sample_data(comp)$Sex <- factor(sample_data(comp)$Sex, levels = c("f", "m"))
+      
+      print(dim(sample_data(comp)))
+      
+      ds <- phyloseq_to_deseq2(comp, ~Sex)
+      
+      # Since these tables have zeroes
+      # calculate geometric means prior to estimate size factors
+      gm_mean <- function(x, na.rm = TRUE) {
+        exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
+      }
+      geoMeans <- apply(counts(ds), 1, gm_mean)
+      
+      ds <- estimateSizeFactors(ds, geoMeans = geoMeans)
+      ds <- DESeq(ds, fitType = "local", test = "Wald")
+      
+      res <- results(ds)
+      alpha <- 0.05
+      sigtab <- res[which(res$padj < alpha), ]
+      sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
+      
+      # Write results to file
+      write.table(sigtab, 
+                  paste0(project_path, "/analysis/deseq_timepoints_new/Sex", comp_pair, "_", timepoint, "_", new_day, ".csv"), 
+                  sep = ";", quote = FALSE, col.names = NA)
+    }, error = function(e) {
+      cat("Error occurred:", conditionMessage(e), "\n")
+    })
+  }
+}
 ```
+
+
 
 
 ```{r}
