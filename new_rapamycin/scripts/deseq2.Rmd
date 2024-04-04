@@ -29,9 +29,7 @@ new_day <- gsub("-", "", as.character(Sys.Date()))
 metadata <- read.table("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/metadata_rapaInter.csv", sep = ";", header = T, row.names = 1, stringsAsFactors = F, comment.char = "")
 ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/phyloseq_obj_20240220.rds")
 
-## Subset females
-#sample_data(ps)$Sex <- as.factor(sample_data(ps)$Sex)
-#ps <- subset_samples(ps, Sex %in% c("f"))
+
 ```
 
 ```{r DESeq2}
@@ -74,12 +72,18 @@ for (i in 1:length(timepoint)){
   
   write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints/RLRE_", timepoint[i], "_ALL_", new_day, ".csv"), sep=";", quote=F, col.names=NA)
 }
+
+ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/phyloseq_obj_20240220.rds")
 ```
 
 
 ```{r DESeq2}
 ## Differential expression
 # Store data in "../analysis/deseq_timepoints/"
+## Subset females
+sample_data(ps)$Sex <- as.factor(sample_data(ps)$Sex)
+ps <- subset_samples(ps, Sex %in% c("f"))
+
 # Format sampledata
 sample_data(ps)$Treatment <- as.factor(sample_data(ps)$Treatment)
 sample_data(ps)$Age <- as.factor(sample_data(ps)$Age)
@@ -117,6 +121,8 @@ for (i in 1:length(timepoint)){
   
   write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints/ContRL_", timepoint[i], "F_", new_day, ".csv"), sep=";", quote=F, col.names=NA)
 }
+
+ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/phyloseq_obj_20240220.rds")
 ```
 
 ```{r}
@@ -153,6 +159,8 @@ for (i in 1:length(timepoint)){
   
   write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints/SexRL_", timepoint[i], "_", new_day, ".csv"), sep=";", quote=F, col.names=NA)
 }
+
+ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/phyloseq_obj_20240220.rds")
 ```
 
 
