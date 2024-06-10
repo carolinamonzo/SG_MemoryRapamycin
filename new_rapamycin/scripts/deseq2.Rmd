@@ -250,7 +250,7 @@ for (comp_pair in comparisons) {
 }
 ```
 
-```{r}
+```{r sex}
 ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/phyloseq_obj_20240220.rds")
 
 # Format sampledata
@@ -307,6 +307,207 @@ for (comp_pair in comparisons) {
 }
 ```
 
+```{r age}
+ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/phyloseq_obj_20240220.rds")
+
+# Format sampledata
+sample_data(ps)$Treatment <- as.factor(sample_data(ps)$Treatment)
+sample_data(ps)$Age <- as.factor(sample_data(ps)$Age)
+
+# Define comparisons
+comparisons <- list(
+  c("Young", "Mid"),
+  c("Mid", "Old"),
+  c("Young", "Old")
+)
+
+# Timepoints
+treat <- c("Rapa Adult", "Control", "Rapa Early")
+# Loop over comparisons
+for (comp_pair in comparisons) {
+  for (tr in treat) {
+    print(comp_pair)
+    print(tr)
+    tryCatch({
+      
+      # Subset for months and treatments
+      comp <- subset_samples(ps, Treatment %in% tr)
+      comp <- subset_samples(comp, Age %in% comp_pair)
+      sample_data(comp)$Age <- factor(sample_data(comp)$Age, levels = comp_pair)
+      
+      ds <- phyloseq_to_deseq2(comp, ~Age)
+      
+      # Since these tables have zeroes
+      # calculate geometric means prior to estimate size factors
+      gm_mean <- function(x, na.rm = TRUE) {
+        exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
+      }
+      geoMeans <- apply(counts(ds), 1, gm_mean)
+      
+      ds <- estimateSizeFactors(ds, geoMeans = geoMeans)
+      ds <- DESeq(ds, fitType = "local", test = "Wald")
+      
+      res <- results(ds)
+      alpha <- 0.05
+      sigtab <- res[which(res$padj < alpha), ]
+      sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
+      
+      # Write results to file
+      write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints_new/AGE_", comp_pair[[1]], "_", comp_pair[[2]], "_", tr, "_", new_day, ".csv"), 
+                  sep = ";", quote = FALSE, col.names = NA)
+    }, error = function(e) {
+      cat("Error occurred:", conditionMessage(e), "\n")
+    })
+  }
+}
+```
+
+```{r}
+## Making the age comparisons also for the switches
+# I need young rapa vs mid and old rapa early
+# And mid rapa and control vs rapa old
+
+sample_data(ps)$AgeTreat <- paste0(sample_data(ps)$Age, sample_data(ps)$Treatment)
+
+comparisons <- list(
+  c("YoungRapa Adult", "MidRapa Early"),
+  c("YoungRapa Adult", "OldRapa Early"),
+  c("MidRapa Adult", "OldRapa Late"),
+  c("MidControl", "OldRapa Late")
+)
+
+for (comp_pair in comparisons) {
+    tryCatch({
+      
+      # Subset for months and treatments
+      comp <- subset_samples(ps, AgeTreat %in% comp_pair)
+      sample_data(comp)$Age <- factor(sample_data(comp)$AgeTreat, levels = comp_pair)
+      
+      ds <- phyloseq_to_deseq2(comp, ~AgeTreat)
+      
+      # Since these tables have zeroes
+      # calculate geometric means prior to estimate size factors
+      gm_mean <- function(x, na.rm = TRUE) {
+        exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
+      }
+      geoMeans <- apply(counts(ds), 1, gm_mean)
+      
+      ds <- estimateSizeFactors(ds, geoMeans = geoMeans)
+      ds <- DESeq(ds, fitType = "local", test = "Wald")
+      
+      res <- results(ds)
+      alpha <- 0.05
+      sigtab <- res[which(res$padj < alpha), ]
+      sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
+      
+      # Write results to file
+      write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints_new/AGE_", comp_pair[[1]], "_", comp_pair[[2]], "_", tr, "_", new_day, ".csv"), 
+                  sep = ";", quote = FALSE, col.names = NA)
+    }, error = function(e) {
+      cat("Error occurred:", conditionMessage(e), "\n")
+    })
+  }
+
+```
+
+```{r}
+## same for Males and females separately
+ps <- readRDS("~/workspace/MPI/SG_MemoryRapamycin/new_rapamycin/analysis/phyloseq_obj_20240220.rds")
+
+ps <- subset_samples(ps, Sex %in% c("m"))
+
+# Format sampledata
+sample_data(ps)$Treatment <- as.factor(sample_data(ps)$Treatment)
+sample_data(ps)$Age <- as.factor(sample_data(ps)$Age)
+
+# Define comparisons
+comparisons <- list(
+  c("Young", "Mid"),
+  c("Mid", "Old"),
+  c("Young", "Old")
+)
+
+# Timepoints
+treat <- c("Rapa Adult", "Control", "Rapa Early")
+# Loop over comparisons
+for (comp_pair in comparisons) {
+  for (tr in treat) {
+    print(comp_pair)
+    print(tr)
+    tryCatch({
+      
+      # Subset for months and treatments
+      comp <- subset_samples(ps, Treatment %in% tr)
+      comp <- subset_samples(comp, Age %in% comp_pair)
+      sample_data(comp)$Age <- factor(sample_data(comp)$Age, levels = comp_pair)
+      
+      ds <- phyloseq_to_deseq2(comp, ~Age)
+      
+      # Since these tables have zeroes
+      # calculate geometric means prior to estimate size factors
+      gm_mean <- function(x, na.rm = TRUE) {
+        exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
+      }
+      geoMeans <- apply(counts(ds), 1, gm_mean)
+      
+      ds <- estimateSizeFactors(ds, geoMeans = geoMeans)
+      ds <- DESeq(ds, fitType = "local", test = "Wald")
+      
+      res <- results(ds)
+      alpha <- 0.05
+      sigtab <- res[which(res$padj < alpha), ]
+      sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
+      
+      # Write results to file
+      write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints_new/AGEMales_", comp_pair[[1]], "_", comp_pair[[2]], "_", tr, "_", new_day, ".csv"), 
+                  sep = ";", quote = FALSE, col.names = NA)
+    }, error = function(e) {
+      cat("Error occurred:", conditionMessage(e), "\n")
+    })
+  }
+}
+
+sample_data(ps)$AgeTreat <- paste0(sample_data(ps)$Age, sample_data(ps)$Treatment)
+
+comparisons <- list(
+  c("YoungRapa Adult", "MidRapa Early"),
+  c("YoungRapa Adult", "OldRapa Early"),
+  c("MidRapa Adult", "OldRapa Late"),
+  c("MidControl", "OldRapa Late")
+)
+
+for (comp_pair in comparisons) {
+    tryCatch({
+      
+      # Subset for months and treatments
+      comp <- subset_samples(ps, AgeTreat %in% comp_pair)
+      sample_data(comp)$Age <- factor(sample_data(comp)$AgeTreat, levels = comp_pair)
+      
+      ds <- phyloseq_to_deseq2(comp, ~AgeTreat)
+      
+      # Since these tables have zeroes
+      # calculate geometric means prior to estimate size factors
+      gm_mean <- function(x, na.rm = TRUE) {
+        exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
+      }
+      geoMeans <- apply(counts(ds), 1, gm_mean)
+      
+      ds <- estimateSizeFactors(ds, geoMeans = geoMeans)
+      ds <- DESeq(ds, fitType = "local", test = "Wald")
+      
+      res <- results(ds)
+      alpha <- 0.05
+      sigtab <- res[which(res$padj < alpha), ]
+      sigtab <- cbind(as(sigtab, "data.frame"), as(tax_table(ps)[rownames(sigtab), ], "matrix"))
+      
+      # Write results to file
+      write.table(sigtab, paste0(project_path, "/analysis/deseq_timepoints_new/AGEMales_", comp_pair[[1]], "_", comp_pair[[2]], "_", tr, "_", new_day, ".csv"), 
+                  sep = ";", quote = FALSE, col.names = NA)
+    }, error = function(e) {
+      cat("Error occurred:", conditionMessage(e), "\n")
+    })
+  }
+```
 
 
 
