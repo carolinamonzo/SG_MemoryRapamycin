@@ -1,0 +1,303 @@
+Sample_ID,Mouse_ID,Sex,Treatment_SG,Treatment,Age
+Plate2_B3,TNES-BG63,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_E12,TNES-BG63,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate1_D1,TNES-BG93,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_D1,TNES-BG93,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_E11,TNES-BH10,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_E12,TNES-BH10,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate1_A10,TNES-BH32,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_H10,TNES-BH32,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_B7,TNES-BH32,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_F12,TNES-BH44,f,Control,Control,Mid
+Plate2_C7,TNES-BH44,f,Control,Control,Old
+Plate2_B9,TNES-BH44,f,Control,Control,Young
+Plate3_H3,TNES-BH46,f,Control,Control,Mid
+Plate4_A1,TNES-BH46,f,Control,Control,Young
+Plate3_D8,TNES-BH47,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_F4,TNES-BH48,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate4_E1,TNES-BH49,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate3_H9,TNES-BH55,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_B12,TNES-BH55,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate4_F1,TNES-BH57,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_E4,TNES-BI14,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_A6,TNES-BI14,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_H1,TNES-BI14,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate1_G8,TNES-BI15,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_G6,TNES-BI15,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_D10,TNES-BI15,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_D12,TNES-BI30,f,Control,Control,Old
+Plate1_H1,TNES-BI31,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate1_F8,TNES-BI31,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_F8,TNES-BI31,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_F11,TNES-BI40,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_C1,TNES-BI40,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_D11,TNES-BI40,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_B9,TNES-BI41,f,Control,Control,Young
+Plate3_E4,TNES-BI41,f,Control,Control,Mid
+Plate4_D1,TNES-BI41,f,Control,Control,Old
+Plate1_A5,TNES-BI42,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_G4,TNES-BI51,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_E7,TNES-BI51,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate4_F2,TNES-BI53,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_D5,TNES-BI57,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate1_D8,TNES-BI57,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_G9,TNES-BI57,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate1_B12,TNES-BI58,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate2_E4,TNES-BI58,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate1_D11,TNES-BI63,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_F6,TNES-BI63,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_G7,TNES-BI76,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate2_D9,TNES-BI85,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_A3,TNES-BI97,f,Control,Control,Old
+Plate1_D10,TNES-BI97,f,Control,Control,Young
+Plate2_A2,TNES-BI98,f,Control,Control,Young
+Plate3_E1,TNES-BI98,f,Control,Control,Mid
+Plate1_A2,TNES-BJ14,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_H11,TNES-BJ14,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_A9,TNES-BJ14,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_A12,TNES-BJ16,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_C4,TNES-BJ16,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate1_E2,TNES-BJ29,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_A5,TNES-BJ29,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate2_D8,TNES-BJ37,f,Control,Control,Young
+Plate3_D2,TNES-BJ37,f,Control,Control,Old
+Plate3_D4,TNES-BJ37,f,Control,Control,Mid
+Plate2_A8,TNES-BJ44,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_D10,TNES-BJ44,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_F3,TNES-BJ44,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_C3,TNES-BJ45,f,Control,Control,Old
+Plate3_F2,TNES-BJ45,f,Control,Control,Mid
+Plate3_B4,TNES-BJ45,f,Control,Control,Young
+Plate1_A1,TNES-BK48,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate1_C9,TNES-BK48,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate4_E3,TNES-BK48,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate1_B4,TNES-BK55,f,Control,Control,Mid
+Plate4_D2,TNES-BK55,f,Control,Control,Young
+Plate2_B4,TNES-BK58,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate2_C11,TNES-BK64,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate2_G11,TNES-BK64,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_B6,TNES-BK73,f,Control,Control,Young
+Plate1_H6,TNES-BK73,f,Control,Control,Old
+Plate2_A1,TNES-BK73,f,Control,Control,Mid
+Plate1_E6,TNES-BK79,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_A3,TNES-BK79,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_G7,TNES-BK79,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate1_F9,TNES-BK91,f,Control,Control,Young
+Plate2_D2,TNES-BK91,f,Control,Control,Mid
+Plate2_A11,TNES-BK91,f,Control,Control,Old
+Plate3_F4,TNES-BK92,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate3_C9,TNES-BK92,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_G10,TNES-BK92,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_C3,TNES-BK96,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_F5,TNES-BK96,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_G12,TNES-BK96,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate1_G5,TNES-BL13,f,Control,Control,Young
+Plate2_B11,TNES-BL13,f,Control,Control,Old
+Plate3_D9,TNES-BL13,f,Control,Control,Mid
+Plate2_C4,TNES-BL19,f,Control,Control,Young
+Plate3_D12,TNES-BL19,f,Control,Control,Mid
+Plate2_H9,TNES-BL38,f,Control,Control,Mid
+Plate2_H12,TNES-BL38,f,Control,Control,Old
+Plate3_H2,TNES-BL38,f,Control,Control,Young
+Plate3_A1,TNES-BL91,f,Control,Control,Old
+Plate3_H7,TNES-BL91,f,Control,Control,Mid
+Plate3_H10,TNES-BL91,f,Control,Control,Young
+Plate4_B2,TNES-BL95,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_B3,TNES-BM00,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_A12,TNES-BM00,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_C12,TNES-BM00,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_E1,TNES-BM11,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_C6,TNES-BM12,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate2_G7,TNES-BM38,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_G6,TNES-BM38,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_A10,TNES-BM38,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_D6,TNES-BM39,f,Control,Control,Young
+Plate1_A11,TNES-BM39,f,Control,Control,Old
+Plate3_F1,TNES-BM39,f,Control,Control,Mid
+Plate4_A2,TNES-BM59,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_A9,TNES-BM70,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_E3,TNES-BM70,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_B11,TNES-BM72,f,Control,Control,Young
+Plate2_F12,TNES-BM72,f,Control,Control,Mid
+Plate4_G2,TNES-BM72,f,Control,Control,Old
+Plate1_C1,TNES-BM74,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_H3,TNES-BM74,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate1_C2,TNES-BM80,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_B9,TNES-BM80,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate2_E9,TNES-BM93,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_A3,TNES-BM93,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate3_D7,TNES-BM93,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate1_C10,TNES-BN14,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate3_G2,TNES-BN14,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_A4,TNES-BN14,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate1_C7,TNES-BN46,f,Control,Control,Young
+Plate1_B5,TNES-BN52,f,Control,Control,Young
+Plate1_D9,TNES-BN52,f,Control,Control,Mid
+Plate2_F9,TNES-BN52,f,Control,Control,Old
+Plate1_D2,TNES-BN63,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_G10,TNES-BN63,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate4_A3,TNES-BN63,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate1_F2,TNES-BO44,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_H4,TNES-BO44,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_B6,TNES-BO44,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_D3,TNES-BO45,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate4_B1,TNES-BO45,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_D3,TNES-BO64,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate2_A10,TNES-BO64,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_C2,TNES-BO80,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate3_H11,TNES-BO83,f,Rapamycin conti (RC),Rapa Adult,Mid
+Plate4_C2,TNES-BO83,f,Rapamycin conti (RC),Rapa Adult,Young
+Plate4_C3,TNES-BO83,f,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_C3,TNES-BO95,f,Control,Control,Young
+Plate1_G1,TNES-BP08,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_H7,TNES-BP08,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_G5,TNES-BP17,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_F9,TNES-BP17,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate1_C12,TNES-BP22,f,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_C5,TNES-BP23,f,Rapa memory Early (RM E),Rapa Early,Old
+Plate1_D12,TNES-BP23,f,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_B10,TNES-BQ84,m,Control,Control,Young
+Plate2_B12,TNES-BQ84,m,Control,Control,Mid
+Plate1_B8,TNES-BQ86,m,Control,Control,Old
+Plate2_E1,TNES-BQ86,m,Control,Control,Mid
+Plate3_F5,TNES-BQ86,m,Control,Control,Young
+Plate3_A8,TNES-BQ87,m,Control,Control,Young
+Plate3_A11,TNES-BQ87,m,Control,Control,Mid
+Plate2_H4,TNES-BQ88,m,Control,Control,Young
+Plate2_B8,TNES-BQ88,m,Control,Control,Mid
+Plate3_E2,TNES-BQ88,m,Control,Control,Old
+Plate1_A7,TNES-BQ91,m,Control,Control,Old
+Plate2_C12,TNES-BQ91,m,Control,Control,Mid
+Plate1_H5,TNES-BQ92,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_H9,TNES-BQ92,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate2_A6,TNES-BQ93,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_B1,TNES-BQ93,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate2_C5,TNES-BQ94,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_G3,TNES-BQ94,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_C8,TNES-BR00,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_B10,TNES-BR00,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate2_F3,TNES-BR01,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_D6,TNES-BR01,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate1_F3,TNES-BR02,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_D4,TNES-BR02,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_D11,TNES-BR02,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_A4,TNES-BR03,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate3_G1,TNES-BR03,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_B1,TNES-BR10,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_D5,TNES-BR10,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_H8,TNES-BR10,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_G2,TNES-BR11,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_D3,TNES-BR11,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_E8,TNES-BR11,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_F10,TNES-BR12,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_F11,TNES-BR12,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_G11,TNES-BR12,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_G8,TNES-BR13,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate2_E7,TNES-BR18,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate3_F8,TNES-BR19,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_G3,TNES-BR25,m,Control,Control,Old
+Plate1_F5,TNES-BR25,m,Control,Control,Mid
+Plate2_H8,TNES-BR25,m,Control,Control,Young
+Plate1_D4,TNES-BR26,m,Control,Control,Young
+Plate3_B5,TNES-BR26,m,Control,Control,Mid
+Plate2_A7,TNES-BR27,m,Control,Control,Mid
+Plate3_A7,TNES-BR27,m,Control,Control,Young
+Plate3_C5,TNES-BR28,m,Control,Control,Mid
+Plate3_E9,TNES-BR28,m,Control,Control,Young
+Plate1_F1,TNES-BR29,m,Control,Control,Old
+Plate1_H12,TNES-BR29,m,Control,Control,Mid
+Plate2_C10,TNES-BR41,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_B7,TNES-BR43,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_B11,TNES-BR43,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_D5,TNES-BR44,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_G12,TNES-BR44,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate2_A4,TNES-BR49,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_E10,TNES-BR49,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate4_F3,TNES-BR49,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_E2,TNES-BR50,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_C7,TNES-BR50,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_C4,TNES-BR51,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_G1,TNES-BR51,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_B2,TNES-BR52,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_E5,TNES-BR52,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate3_F10,TNES-BR52,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate1_E3,TNES-BR53,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_B2,TNES-BR53,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_G8,TNES-BR59,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate2_F7,TNES-BR61,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_E12,TNES-BR62,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate3_C11,TNES-BR69,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate4_B3,TNES-BR69,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_H6,TNES-BR70,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate2_B5,TNES-BR71,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate2_E6,TNES-BR72,m,Control,Control,Young
+Plate4_D3,TNES-BR72,m,Control,Control,Mid
+Plate2_H3,TNES-BR73,m,Control,Control,Young
+Plate2_G4,TNES-BR73,m,Control,Control,Mid
+Plate2_H2,TNES-BR74,m,Control,Control,Old
+Plate3_H4,TNES-BR74,m,Control,Control,Mid
+Plate4_E2,TNES-BR74,m,Control,Control,Young
+Plate1_G12,TNES-BR75,m,Control,Control,Old
+Plate2_D1,TNES-BR75,m,Control,Control,Mid
+Plate3_H5,TNES-BR75,m,Control,Control,Young
+Plate2_C2,TNES-BR76,m,Control,Control,Young
+Plate2_H6,TNES-BR76,m,Control,Control,Mid
+Plate2_A5,TNES-BR80,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate4_C1,TNES-BR80,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate3_G4,TNES-BR81,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_E10,TNES-BR82,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate2_E10,TNES-BR88,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate2_B7,TNES-BR89,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_G9,TNES-BR89,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_G11,TNES-BR90,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_H11,TNES-BR90,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_F7,TNES-BR90,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_E9,TNES-BR91,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_G5,TNES-BR91,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate3_A6,TNES-BR91,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate1_F6,TNES-BR92,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_E8,TNES-BR92,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_E11,TNES-BR92,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate1_B2,TNES-BR93,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate3_B3,TNES-BR93,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate3_B8,TNES-BR93,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate1_G2,TNES-BR99,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate2_D6,TNES-BS01,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate2_F1,TNES-BS03,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_C11,TNES-BS04,m,Control,Control,Young
+Plate3_E5,TNES-BS04,m,Control,Control,Old
+Plate3_F12,TNES-BS04,m,Control,Control,Mid
+Plate2_F4,TNES-BS08,m,Control,Control,Mid
+Plate3_A9,TNES-BS08,m,Control,Control,Young
+Plate1_A8,TNES-BS13,m,Control,Control,Mid
+Plate1_G10,TNES-BS13,m,Control,Control,Young
+Plate1_H10,TNES-BS13,m,Control,Control,Old
+Plate2_B6,TNES-BS14,m,Control,Control,Mid
+Plate2_C6,TNES-BS14,m,Control,Control,Young
+Plate4_G1,TNES-BS14,m,Control,Control,Old
+Plate1_D7,TNES-BS15,m,Control,Control,Mid
+Plate1_E7,TNES-BS15,m,Control,Control,Young
+Plate2_H5,TNES-BS21,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate3_H12,TNES-BS21,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate2_G3,TNES-BS22,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_F10,TNES-BS23,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_H2,TNES-BS24,m,Rapa memory Early (RM E),Rapa Early,Old
+Plate2_H7,TNES-BS24,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_A12,TNES-BS28,m,Rapa memory Early (RM E),Rapa Early,Mid
+Plate1_E8,TNES-BS29,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_G9,TNES-BS29,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_E6,TNES-BS29,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate1_C8,TNES-BS30,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate3_A2,TNES-BS30,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_C10,TNES-BS30,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_F2,TNES-BS33,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_C9,TNES-BS33,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_C8,TNES-BS34,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate3_F11,TNES-BS34,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_E3,TNES-BS35,m,Rapamycin conti (RC),Rapa Adult,Mid
+Plate2_F6,TNES-BS35,m,Rapamycin conti (RC),Rapa Adult,Young
+Plate2_B10,TNES-BS35,m,Rapamycin conti (RC),Rapa Adult,Old
+Plate2_D7,TNES-BS36,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate1_E5,TNES-BS47,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate2_E11,TNES-BS48,m,Rapa memory Late (RM L),Rapa Late,Old
+Plate3_C1,TNES-BS49,m,Rapa memory Late (RM L),Rapa Late,Old
